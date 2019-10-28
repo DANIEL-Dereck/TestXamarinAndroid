@@ -8,13 +8,25 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:id="@+id/tv_delete"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        style="@style/lstItem"
+        android:text="X"
+        android:textColor="@android:color/holo_red_light"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tv_num" />
+
+    <TextView
         android:id="@+id/tv_num"
         android:layout_height="wrap_content"
         android:layout_width="0dp"
         style="@style/lstItem"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/tv_delete"
         app:layout_constraintRight_toLeftOf="@+id/tv_ess" />
 
     <TextView

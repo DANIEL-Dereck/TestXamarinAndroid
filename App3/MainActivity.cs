@@ -8,27 +8,24 @@ using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using App3.Database;
 using App3.Resources;
 
 namespace App3
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
-    public class MainActivity : AppCompatActivity
+    public class MainActivity : BaseActivity
     {
-        public List<Entity> Items { get; set; }
         private RecyclerView ListItem { get; set; }
         private EntityListAdapter ListAdapter { get; set; }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            SingletonEntity.Instance.GenerateFixtures(30);
+
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.activity_main);
-            GenerateFixtures();
 
-            ListItem = this.FindViewById<RecyclerView>(Resource.Id.rv_items);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            ListAdapter = new EntityListAdapter(Items);
-
             ListItem.SetLayoutManager(layoutManager);
             ListItem.SetAdapter(ListAdapter);
             ListItem.SetItemViewCacheSize(0);
@@ -53,33 +50,20 @@ namespace App3
             return base.OnOptionsItemSelected(item);
         }
 
-        /// <summary>
-        /// Generate fake data and put them into the list.
-        /// </summary>
-        private void GenerateFixtures()
+        public override void InitComponents()
         {
-            this.Items = new List<Entity>();
-
-            for (int i = 0; i < 30; i++)
-            {
-                Entity item = new Entity()
-                {
-                    Num = i,
-                    Ess = $"Ess{i}",
-                    Diam1 = i + 10 * i,
-                    Diam2 = i + 10 * i,
-                };
-
-                this.Items.Add(item);
-            }
+            ListItem = this.FindViewById<RecyclerView>(Resource.Id.rv_items);
+            ListAdapter = new EntityListAdapter(SingletonEntity.Instance.FindAll(), this);
         }
 
-        private void FabOnClick(object sender, EventArgs eventArgs)
+        public override void InitEvents()
         {
-            View view = (View) sender;
-            Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
-                .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
         }
-	}
+
+        public override int GetContentView()
+        {
+            return Resource.Layout.activity_main;
+        }
+    }
 }
 

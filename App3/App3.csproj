@@ -56,6 +56,9 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseActivity.cs" />
+    <Compile Include="Database\SingletonEntity.cs" />
+    <Compile Include="EditActivity.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="StickyItemRecyclerDecoration.cs" />
     <Compile Include="MainActivity.cs" />
@@ -110,6 +113,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\entity_item.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_edit.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
