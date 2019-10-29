@@ -13,7 +13,7 @@ using App3.Resources;
 
 namespace App3
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", MainLauncher = true)]
     public class MainActivity : BaseActivity
     {
         private Button btnCancel;
