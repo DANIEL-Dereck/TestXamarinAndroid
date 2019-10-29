@@ -50,7 +50,7 @@ namespace App3.Database
                 }
             }
 
-            if (isInsert && num != null)
+            if (!isInsert && num != null)
             {
                 items.Find(x => x.Num == num).Ess = entity.Ess;
                 items.Find(x => x.Num == num).Diam1 = entity.Diam1;

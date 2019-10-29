@@ -25,4 +25,11 @@
         <item name="android:layout_marginBottom">2dp</item>
     </style>
 
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColor">@color/Text</item>
+        <item name="android:background">@color/Background</item>
+        <item name="android:textColorPrimary">@color/Text</item>
+        <item name="textColorAlertDialogListItem">@color/AlertDialogListItem</item>
+    </style>
+    
 </resources>

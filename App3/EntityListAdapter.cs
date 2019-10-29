@@ -36,7 +36,7 @@ namespace App3.Resources
             {
                 Num = null,
                 Ess = "",
-                Diam1 = 0,
+                Diam1 = null,
                 Diam2 = 0,
             });
 
@@ -84,7 +84,7 @@ namespace App3.Resources
             {
                 txtColor = new Color(0, 0, 0);
 
-                if (selectedItem.Num % 2 == 1)
+                if (viewHolder.AdapterPosition % 2 == 1)
                 {
                     color = new Color(237, 237, 237);
                 } else
@@ -105,19 +105,43 @@ namespace App3.Resources
                 holder.TVDiam2.SetTextSize(ComplexUnitType.Sp, itemSize);
 
                 // Set click event.
-                holder.TVNum.Click += (sender, e) =>
-                {
-                    Toast.MakeText(this.context, "Num", ToastLength.Short).Show();
-                };
-
                 holder.TVEss.Click += (sender, e) =>
                 {
-                    Toast.MakeText(this.context, "Ess", ToastLength.Short).Show();
+                    Intent intent = new Intent(context, typeof(EditActivity));
+                    intent.PutExtra(EditActivity.EXTRA_ID, selectedItem.Num.Value);
+                    intent.PutExtra(EditActivity.EXTRA_EDIT_CODE, 0);
+                    context.StartActivity(intent);
                 };
 
                 holder.TVDiam1.Click += (sender, e) =>
                 {
-                    Toast.MakeText(this.context, "Diam1", ToastLength.Short).Show();
+                    AlertDialog.Builder alert = new AlertDialog.Builder(this.context);
+                    alert.SetTitle("Que voulez-vous faire ?");
+
+                    string[] alertItems = new string[] { "Editer", "Supprimer" };
+                    alert.SetItems(alertItems, (id, listener) =>
+                    {
+                        switch (listener.Which)
+                        {
+                            // Edit
+                            case 0:
+                                Intent intent = new Intent(context, typeof(EditActivity));
+                                intent.PutExtra(EditActivity.EXTRA_ID, selectedItem.Num.Value);
+                                intent.PutExtra(EditActivity.EXTRA_EDIT_CODE, 1);
+                                context.StartActivity(intent);
+                                break;
+                            // Delete
+                            case 1:
+                                selectedItem.Diam1 = null;
+                                SingletonEntity.Instance.InsertOrUpdate(selectedItem);
+                                this.NotifyDataSetChanged();
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                    alert.SetNegativeButton("Cancel", (senderAlert, args) => { });
+                    alert.Create().Show();
                 };
 
                 holder.TVDiam2.Click += (sender, e) =>
@@ -132,8 +156,9 @@ namespace App3.Resources
                         {
                             // Edit
                             case 0:
-                                // Start intent
                                 Intent intent = new Intent(context, typeof(EditActivity));
+                                intent.PutExtra(EditActivity.EXTRA_ID, selectedItem.Num.Value);
+                                intent.PutExtra(EditActivity.EXTRA_EDIT_CODE, 2);
                                 context.StartActivity(intent);
                                 break;
                             // Delete
@@ -141,7 +166,6 @@ namespace App3.Resources
                                 selectedItem.Diam2 = 0;
                                 SingletonEntity.Instance.InsertOrUpdate(selectedItem);
                                 this.NotifyDataSetChanged();
-
                                 break;
                             default:
                                 break;

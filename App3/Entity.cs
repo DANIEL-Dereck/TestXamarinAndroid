@@ -30,9 +30,9 @@ namespace App3
             set { ess = value; }
         }
 
-        private int diam1;
+        private int? diam1;
 
-        public int Diam1
+        public int? Diam1
         {
             get { return diam1; }
             set { diam1 = value; }

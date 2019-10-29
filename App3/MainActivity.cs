@@ -16,8 +16,10 @@ namespace App3
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : BaseActivity
     {
-        private RecyclerView ListItem { get; set; }
-        private EntityListAdapter ListAdapter { get; set; }
+        private Button btnCancel;
+        private Button btnValidate;
+        private RecyclerView rvItems;
+        private EntityListAdapter listAdapter;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -26,43 +28,47 @@ namespace App3
             base.OnCreate(savedInstanceState);
 
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            ListItem.SetLayoutManager(layoutManager);
-            ListItem.SetAdapter(ListAdapter);
-            ListItem.SetItemViewCacheSize(0);
+            rvItems.SetLayoutManager(layoutManager);
+            rvItems.SetAdapter(listAdapter);
+            rvItems.SetItemViewCacheSize(0);
 
-            ListAdapter.NotifyDataSetChanged();
-        }
-
-        public override bool OnCreateOptionsMenu(IMenu menu)
-        {
-            MenuInflater.Inflate(Resource.Menu.menu_main, menu);
-            return true;
-        }
-
-        public override bool OnOptionsItemSelected(IMenuItem item)
-        {
-            int id = item.ItemId;
-            if (id == Resource.Id.action_settings)
-            {
-                return true;
-            }
-
-            return base.OnOptionsItemSelected(item);
+            listAdapter.NotifyDataSetChanged();
         }
 
         public override void InitComponents()
         {
-            ListItem = this.FindViewById<RecyclerView>(Resource.Id.rv_items);
-            ListAdapter = new EntityListAdapter(SingletonEntity.Instance.FindAll(), this);
+            this.btnCancel = this.FindViewById<Button>(Resource.Id.btn_cancel);
+            this.btnValidate = this.FindViewById<Button>(Resource.Id.btn_validate);
+            rvItems = this.FindViewById<RecyclerView>(Resource.Id.rv_items);
+            listAdapter = new EntityListAdapter(SingletonEntity.Instance.FindAll(), this);
         }
 
         public override void InitEvents()
         {
+            this.btnCancel.Click += (sender, e) =>
+            {
+                this.OnBackPressed();
+            };
+
+            this.btnValidate.Click += (sender, e) =>
+            {
+                this.OnBackPressed();
+            };
         }
 
         public override int GetContentView()
         {
             return Resource.Layout.activity_main;
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            if (listAdapter != null)
+            {
+                listAdapter.NotifyDataSetChanged();
+            }
         }
     }
 }
