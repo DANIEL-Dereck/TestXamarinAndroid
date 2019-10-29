@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
@@ -52,7 +53,8 @@ namespace App3
 
             this.btnValidate.Click += (sender, e) =>
             {
-                this.OnBackPressed();
+                Intent intent = new Intent(this, typeof(TabsActivity));
+                this.StartActivity(intent);
             };
         }
 

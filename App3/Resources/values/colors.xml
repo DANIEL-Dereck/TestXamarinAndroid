@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2c3e50</color>
-    <color name="colorPrimaryDark">#1B3147</color>
-    <color name="colorAccent">#3498db</color>
+    <color name="colorPrimary">#083763</color>
+    <color name="colorPrimaryDark">#F00</color>
+    <color name="colorAccent">#084063</color>
 
     <color name="Text">#000</color>
     <color name="Background">#FFF</color>
     <color name="AlertDialogListItem">#3FC8FF</color>
+
+    <color name="AppMain">#083763</color>
+    <color name="GreenMain">#2C5413</color>
+
+    <color name="TabSelected">#2C5413</color>
+    <color name="TabUnselected">#183704</color>
+
 </resources>

@@ -99,8 +99,8 @@ namespace App3.Database
                     {
                         Num = i,
                         Ess = $"Ess{i}",
-                        Diam1 = (int)(ran.Next(1, 100) * 3.14159265f),
-                        Diam2 = (int)(ran.Next(1, 100) * 3.14159265f),
+                        Diam1 = (int)(ran.Next(i, 100) * 3.14159265f),
+                        Diam2 = (int)(ran.Next(i, 100) * 3.14159265f),
                     };
 
                     items.Add(item);
