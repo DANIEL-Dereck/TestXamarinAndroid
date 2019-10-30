@@ -60,7 +60,6 @@
     <Compile Include="Database\SingletonEntity.cs" />
     <Compile Include="EditActivity.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="StickyItemRecyclerDecoration.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="EntityListAdapter.cs" />
     <Compile Include="Resources\Resource.designer.cs" />

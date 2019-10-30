@@ -6,7 +6,30 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:actionBarTabStyle">@drawable/tabColorSelector</item>
+
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Example</item>
+        <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle.Exemple</item>
+
+    </style>
+
+    <style name="ActionBarTabStyle.Example" parent="@style/Widget.AppCompat.Light.ActionBar.TabView">
+        <item name="android:background">@drawable/tabColorSelector</item>
+    </style>
+
+    <style name="ActionBarTabTextStyle.Exemple" parent="@style/Widget.AppCompat.Light.ActionBar.TabText">
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
+    <style name="ActionBarTabStyle.Example" parent="@style/Widget.AppCompat.Light.ActionBar.TabView">
+        <item name="android:background">@drawable/tabColorSelector</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:showAsAction">always</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

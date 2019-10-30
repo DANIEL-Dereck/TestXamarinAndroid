@@ -15,10 +15,14 @@ namespace App3
         private TextView tv4;
         private TextView tv5;
         private TextView tv6;
-        private TextView tv7;
-        private TextView tv8;
-        private TextView tv9;
-        private TextView tv10;
+
+        private EditText et1;
+        private EditText et2;
+        private EditText et3;
+        private EditText et4;
+        private Button btn5;
+        private EditText et6;
+
         private Button btnValidate;
         #endregion
         
@@ -26,7 +30,6 @@ namespace App3
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            this.SupportActionBar.Title = "Placette 1 - Rayon 22.5";
             this.SupportActionBar.NavigationMode = (int)ActionBarNavigationMode.Tabs;
             this.SupportActionBar.SetDisplayShowHomeEnabled(true);
             this.SupportActionBar.SetDisplayShowTitleEnabled(true);
@@ -48,10 +51,14 @@ namespace App3
             this.tv4 = this.FindViewById<TextView>(Resource.Id.tv_4);
             this.tv5 = this.FindViewById<TextView>(Resource.Id.tv_5);
             this.tv6 = this.FindViewById<TextView>(Resource.Id.tv_6);
-            this.tv7 = this.FindViewById<TextView>(Resource.Id.tv_7);
-            this.tv8 = this.FindViewById<TextView>(Resource.Id.tv_8);
-            this.tv9 = this.FindViewById<TextView>(Resource.Id.tv_9);
-            this.tv10 = this.FindViewById<TextView>(Resource.Id.tv_10);
+
+            this.et1 = this.FindViewById<EditText>(Resource.Id.et_1);
+            this.et2 = this.FindViewById<EditText>(Resource.Id.et_2);
+            this.et3 = this.FindViewById<EditText>(Resource.Id.et_3);
+            this.et4 = this.FindViewById<EditText>(Resource.Id.et_4);
+            this.btn5 = this.FindViewById<Button>(Resource.Id.btn_5);
+            this.et6 = this.FindViewById<EditText>(Resource.Id.et_6);
+
             this.btnValidate = this.FindViewById<Button>(Resource.Id.btn_validate);
         }
 
@@ -75,25 +82,25 @@ namespace App3
         {
             this.SupportActionBar.AddTab(
                 this.SupportActionBar.NewTab()
-                .SetText("Placeau 1")
+                .SetText("Placeau\n1")
                 .SetTabListener(this),
                 0);
 
             this.SupportActionBar.AddTab(
                 this.SupportActionBar.NewTab()
-                .SetText("Placeau 2")
+                .SetText("Placeau\n2")
                 .SetTabListener(this),
                 1);
 
             this.SupportActionBar.AddTab(
                 this.SupportActionBar.NewTab()
-                .SetText("Placeau 3")
+                .SetText("Placeau\n3")
                 .SetTabListener(this),
                 2);
 
             this.SupportActionBar.AddTab(
                 this.SupportActionBar.NewTab()
-                .SetText("Sous-étage")
+                .SetText("Sous-\nétage")
                 .SetTabListener(this),
                 3);
         }
@@ -110,6 +117,8 @@ namespace App3
             switch (tab.Position)
             {
                 case 0:
+                    this.SupportActionBar.Title = "Placette 1 - Rayon 22.5";
+
                     #region SetValueCase0
                     this.tv1.Text = "Placeau 1";
                     this.tv2.Text = "Placeau 1";
@@ -117,13 +126,11 @@ namespace App3
                     this.tv4.Text = "Placeau 1";
                     this.tv5.Text = "Placeau 1";
                     this.tv6.Text = "Placeau 1";
-                    this.tv7.Text = "Placeau 1";
-                    this.tv8.Text = "Placeau 1";
-                    this.tv9.Text = "Placeau 1";
-                    this.tv10.Text = "Placeau 1";
                     #endregion
                     break;
                 case 1:
+                    this.SupportActionBar.Title = "Placette 1 - Rayon 23.5";
+
                     #region SetValuesCase1
                     this.tv1.Text = "Placeau 2";
                     this.tv2.Text = "Placeau 2";
@@ -131,13 +138,11 @@ namespace App3
                     this.tv4.Text = "Placeau 2";
                     this.tv5.Text = "Placeau 2";
                     this.tv6.Text = "Placeau 2";
-                    this.tv7.Text = "Placeau 2";
-                    this.tv8.Text = "Placeau 2";
-                    this.tv9.Text = "Placeau 2";
-                    this.tv10.Text = "Placeau 2";
                     #endregion
                     break;
                 case 2:
+                    this.SupportActionBar.Title = "Placette 1 - Rayon 24.5";
+
                     #region SetValueCase2
                     this.tv1.Text = "Placeau 3";
                     this.tv2.Text = "Placeau 3";
@@ -145,13 +150,11 @@ namespace App3
                     this.tv4.Text = "Placeau 3";
                     this.tv5.Text = "Placeau 3";
                     this.tv6.Text = "Placeau 3";
-                    this.tv7.Text = "Placeau 3";
-                    this.tv8.Text = "Placeau 3";
-                    this.tv9.Text = "Placeau 3";
-                    this.tv10.Text = "Placeau 3";
                     #endregion
                     break;
                 case 3:
+                    this.SupportActionBar.Title = "Placette 1 - Rayon 25.5";
+
                     #region SetValueCase3
                     this.tv1.Text = "Sous-étage";
                     this.tv2.Text = "Sous-étage";
@@ -159,10 +162,6 @@ namespace App3
                     this.tv4.Text = "Sous-étage";
                     this.tv5.Text = "Sous-étage";
                     this.tv6.Text = "Sous-étage";
-                    this.tv7.Text = "Sous-étage";
-                    this.tv8.Text = "Sous-étage";
-                    this.tv9.Text = "Sous-étage";
-                    this.tv10.Text = "Sous-étage";
                     #endregion
                     break;
             }
