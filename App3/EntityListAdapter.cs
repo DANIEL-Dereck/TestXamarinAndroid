@@ -1,16 +1,13 @@
-﻿using Android.Views;
-using Android.Widget;
-using Android.Support.V7.Widget;
-using System.Collections.Generic;
-using Android.Graphics;
-using Android.Util;
-using static Android.Support.V7.Widget.RecyclerView;
-using Android.Content;
+﻿using System.Collections.Generic;
 using Android.App;
-using System;
-using Android.Text;
-using Android.Text.Style;
+using Android.Content;
+using Android.Graphics;
+using Android.Support.V7.Widget;
+using Android.Util;
+using Android.Views;
+using Android.Widget;
 using App3.Database;
+using static Android.Support.V7.Widget.RecyclerView;
 
 namespace App3.Resources
 {
@@ -21,11 +18,17 @@ namespace App3.Resources
 
     public class EntityListAdapter : RecyclerView.Adapter
     {
-        List<Entity> items;
-        Context context;
+        #region Attributs
+        private List<Entity> items;
+        private Context context;
+        private string[] alertItems = new string[] { "Editer", "Supprimer" };
+        #endregion
 
-        string[] alertItems = new string[] { "Editer", "Supprimer" };
+        #region Properties
+        public Entity SelectedEntity { get; set; }
+        #endregion
 
+        #region Constructors
         public EntityListAdapter(List<Entity> data, Context context)
         {
             this.context = context;
@@ -42,7 +45,9 @@ namespace App3.Resources
 
             items.AddRange(data);
         }
+        #endregion
 
+        #region OverridedMethods
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
             View itemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.entity_item, parent, false);
@@ -66,6 +71,7 @@ namespace App3.Resources
             // if Num is null, we display the header.
             if (selectedItem.Num == null)
             {
+                #region Header
                 txtColor = new Color(255, 255, 255);
                 color = new Color(8, 55, 99);
 
@@ -79,15 +85,18 @@ namespace App3.Resources
                 holder.TVEss.SetTextSize(ComplexUnitType.Sp, titelSize);
                 holder.TVDiam1.SetTextSize(ComplexUnitType.Sp, titelSize);
                 holder.TVDiam2.SetTextSize(ComplexUnitType.Sp, titelSize);
+                #endregion
             }
             else
             {
+                #region Values
                 txtColor = new Color(0, 0, 0);
 
                 if (viewHolder.AdapterPosition % 2 == 1)
                 {
                     color = new Color(237, 237, 237);
-                } else
+                }
+                else
                 {
                     color = new Color(255, 255, 255);
                 }
@@ -104,6 +113,7 @@ namespace App3.Resources
                 holder.TVDiam1.SetTextSize(ComplexUnitType.Sp, itemSize);
                 holder.TVDiam2.SetTextSize(ComplexUnitType.Sp, itemSize);
 
+                #region TVEssEvent
                 // Set click event.
                 holder.TVEss.Click += (sender, e) =>
                 {
@@ -112,7 +122,9 @@ namespace App3.Resources
                     intent.PutExtra(EditActivity.EXTRA_EDIT_CODE, 0);
                     context.StartActivity(intent);
                 };
+                #endregion
 
+                #region TVDiam1Event
                 holder.TVDiam1.Click += (sender, e) =>
                 {
                     AlertDialog.Builder alert = new AlertDialog.Builder(this.context);
@@ -143,7 +155,9 @@ namespace App3.Resources
                     alert.SetNegativeButton("Cancel", (senderAlert, args) => { });
                     alert.Create().Show();
                 };
+                #endregion
 
+                #region TVDiam2Event
                 holder.TVDiam2.Click += (sender, e) =>
                 {
                     AlertDialog.Builder alert = new AlertDialog.Builder(this.context);
@@ -174,7 +188,9 @@ namespace App3.Resources
                     alert.SetNegativeButton("Cancel", (senderAlert, args) => { });
                     alert.Create().Show();
                 };
+                #endregion
 
+                #region TVDeleteEvent
                 holder.TVDelete.Click += (sender, e) =>
                 {
                     AlertDialog.Builder alert = new AlertDialog.Builder(this.context);
@@ -187,34 +203,43 @@ namespace App3.Resources
                     alert.SetNegativeButton("Non", (senderAlert, args) => { });
                     alert.Create().Show();
                 };
+                #endregion
+                #endregion
             }
 
+            #region SetColor
             // Set color.
             holder.ItemView.SetBackgroundColor(color);
             holder.TVNum.SetTextColor(txtColor);
             holder.TVEss.SetTextColor(txtColor);
             holder.TVDiam1.SetTextColor(txtColor);
             holder.TVDiam2.SetTextColor(txtColor);
+            #endregion
         }
 
-        public override int ItemCount => items.Count -1;
+        public override int ItemCount => items.Count - 1;
     }
+    #endregion
 
     public class EntityListAdapterViewHolder : RecyclerView.ViewHolder
     {
+        #region Properties
         public TextView TVDelete { get; set; }
         public TextView TVNum { get; set; }
         public TextView TVEss { get; set; }
         public TextView TVDiam1 { get; set; }
         public TextView TVDiam2 { get; set; }
+        #endregion
 
         public EntityListAdapterViewHolder(View itemView) : base(itemView)
         {
+            #region Init
             this.TVDelete = itemView.FindViewById<TextView>(Resource.Id.tv_delete);
             this.TVNum = itemView.FindViewById<TextView>(Resource.Id.tv_num);
             this.TVEss = itemView.FindViewById<TextView>(Resource.Id.tv_ess);
             this.TVDiam1 = itemView.FindViewById<TextView>(Resource.Id.tv_dim1);
             this.TVDiam2 = itemView.FindViewById<TextView>(Resource.Id.tv_dim2);
+            #endregion
         }
     }
 }

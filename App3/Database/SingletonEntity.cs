@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 
 namespace App3.Database
 {
     public class SingletonEntity
     {
+        #region Attributs
         private static SingletonEntity instance;
         private static List<Entity> items;
+        #endregion
 
+        #region Properties
+        /// <summary>
+        /// Create or use instance of SingletonEntity.
+        /// </summary>
         public static SingletonEntity Instance
         {
             get
@@ -29,12 +26,21 @@ namespace App3.Database
                 return instance;
             }
         }
+        #endregion
 
+        #region Constructors
+        /// <summary>
+        /// Private constructor. Singleton way.
+        /// </summary>
         private SingletonEntity()
         {
 
         }
+        #endregion
 
+        #region Methods
+
+        #region CRUD
         public SingletonEntity InsertOrUpdate(Entity entity)
         {
             bool isInsert = true;
@@ -56,7 +62,8 @@ namespace App3.Database
                 items.Find(x => x.Num == num).Diam1 = entity.Diam1;
                 items.Find(x => x.Num == num).Diam2 = entity.Diam2;
             }
-            else { 
+            else
+            {
                 items.Add(entity);
             }
 
@@ -84,7 +91,13 @@ namespace App3.Database
         {
             return items;
         }
+        #endregion
 
+        #region UtilsMethods
+        /// <summary>
+        /// GenerateFixtures.
+        /// </summary>
+        /// <param name="max">Number of row we want to generate.</param>
         public void GenerateFixtures(int max)
         {
             if (items.Count <= 0)
@@ -95,22 +108,19 @@ namespace App3.Database
                 {
                     Random ran = new Random();
 
-                    Entity item = new Entity()
-                    {
-                        Num = i,
-                        Ess = $"Ess{i}",
-                        Diam1 = (int)(ran.Next(i, 100) * 3.14159265f),
-                        Diam2 = (int)(ran.Next(i, 100) * 3.14159265f),
-                    };
-
-                    items.Add(item);
+                    items.Add(new Entity(i, $"Ess{i}", (int)(ran.Next(i, 100) * 3.14159265f), (int)(ran.Next(i, 100) * 3.14159265f)));
                 }
             }
         }
 
+        /// <summary>
+        /// Simulation of ClearTable.
+        /// </summary>
         public void Clear()
         {
             items.Clear();
         }
+        #endregion
+        #endregion
     }
 }

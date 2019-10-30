@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
+﻿using Android.App;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using App3.Database;
 
@@ -16,9 +8,12 @@ namespace App3
     [Activity(Label = "EditActivity")]
     public class EditActivity : BaseActivity
     {
+        #region Const
         public const string EXTRA_ID = "EXTRA_ID";
         public const string EXTRA_EDIT_CODE = "EXTRA_EDIT_CODE";
+        #endregion
 
+        #region Attributs
         private TextView tvLibel;
         private EditText etValue;
         private Button btnCancel;
@@ -26,13 +21,40 @@ namespace App3
 
         private Entity editedItem;
         private int editCode;
+        #endregion
 
-        public override int GetContentView()
+        #region OverridedMethods
+        protected override void OnCreate(Bundle savedInstanceState)
         {
-            return Resource.Layout.activity_edit;
+            base.OnCreate(savedInstanceState);
+
+            if (this.Intent != null)
+            {
+                this.editedItem = SingletonEntity.Instance.Find(this.Intent.GetIntExtra(EXTRA_ID, 0));
+
+                this.editCode = this.Intent.GetIntExtra(EXTRA_EDIT_CODE, 0);
+                string libel = "";
+
+                switch (this.editCode)
+                {
+                    case 0:
+                        libel = $"Ess of {this.editedItem.Num}";
+                        this.etValue.Text = this.editedItem.Ess;
+                        break;
+                    case 1:
+                        libel = $"Diam1 of {this.editedItem.Num}";
+                        this.etValue.Text = this.editedItem.Diam1.ToString();
+                        break;
+                    case 2:
+                        libel = $"Diam2 of {this.editedItem.Num}";
+                        this.etValue.Text = this.editedItem.Diam2.ToString();
+                        break;
+                }
+                this.tvLibel.Text = libel;
+            }
         }
 
-        public override void InitComponents()
+        protected override void InitComponents()
         {
             this.tvLibel = this.FindViewById<TextView>(Resource.Id.tv_libel);
             this.etValue = this.FindViewById<EditText>(Resource.Id.et_value);
@@ -40,7 +62,8 @@ namespace App3
             this.btnValidate = this.FindViewById<Button>(Resource.Id.btn_validate);
         }
 
-        public override void InitEvents()
+
+        protected override void InitEvents()
         {
             this.btnCancel.Click += (sender, e) =>
             {
@@ -75,34 +98,10 @@ namespace App3
             };
         }
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        public override int GetContentView()
         {
-            base.OnCreate(savedInstanceState);
-
-            if (this.Intent != null)
-            {
-                this.editedItem = SingletonEntity.Instance.Find(this.Intent.GetIntExtra(EXTRA_ID, 0));
-
-                this.editCode = this.Intent.GetIntExtra(EXTRA_EDIT_CODE, 0);
-                string libel = "";
-
-                switch (this.editCode)
-                {
-                    case 0:
-                        libel = $"Ess of {this.editedItem.Num}";
-                        this.etValue.Text = this.editedItem.Ess;
-                        break;
-                    case 1:
-                        libel = $"Diam1 of {this.editedItem.Num}";
-                        this.etValue.Text = this.editedItem.Diam1.ToString();
-                        break;
-                    case 2:
-                        libel = $"Diam2 of {this.editedItem.Num}";
-                        this.etValue.Text = this.editedItem.Diam2.ToString();
-                        break;
-                }
-                this.tvLibel.Text = libel;
-            }
+            return Resource.Layout.activity_edit;
         }
+        #endregion
     }
 }

@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Support.Design.Widget;
-using Android.Support.V7.App;
 using Android.Support.V7.Widget;
-using Android.Views;
 using Android.Widget;
 using App3.Database;
 using App3.Resources;
@@ -17,11 +11,14 @@ namespace App3
     [Activity(Label = "@string/app_name", MainLauncher = true)]
     public class MainActivity : BaseActivity
     {
+        #region Attributs
         private Button btnCancel;
         private Button btnValidate;
         private RecyclerView rvItems;
         private EntityListAdapter listAdapter;
+        #endregion
 
+        #region OverridedMethods
         protected override void OnCreate(Bundle savedInstanceState)
         {
             SingletonEntity.Instance.GenerateFixtures(30);
@@ -36,7 +33,17 @@ namespace App3
             listAdapter.NotifyDataSetChanged();
         }
 
-        public override void InitComponents()
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            if (listAdapter != null)
+            {
+                listAdapter.NotifyDataSetChanged();
+            }
+        }
+
+        protected override void InitComponents()
         {
             this.btnCancel = this.FindViewById<Button>(Resource.Id.btn_cancel);
             this.btnValidate = this.FindViewById<Button>(Resource.Id.btn_validate);
@@ -44,7 +51,7 @@ namespace App3
             listAdapter = new EntityListAdapter(SingletonEntity.Instance.FindAll(), this);
         }
 
-        public override void InitEvents()
+        protected override void InitEvents()
         {
             this.btnCancel.Click += (sender, e) =>
             {
@@ -62,16 +69,6 @@ namespace App3
         {
             return Resource.Layout.activity_main;
         }
-
-        protected override void OnResume()
-        {
-            base.OnResume();
-
-            if (listAdapter != null)
-            {
-                listAdapter.NotifyDataSetChanged();
-            }
-        }
+        #endregion
     }
 }
-

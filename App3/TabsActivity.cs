@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
+﻿using Android.App;
 using Android.OS;
-using Android.Runtime;
-using Android.Support.V4.App;
-using Android.Support.V7.App;
-using Android.Views;
 using Android.Widget;
 using static Android.Support.V7.App.ActionBar;
 
@@ -18,24 +8,69 @@ namespace App3
     [Activity(Label = "Régénération", Theme = "@style/AppTheme")]
     public class TabsActivity : BaseActivity, ITabListener
     {
-        TextView tv1;
-        TextView tv2;
-        TextView tv3;
-        TextView tv4;
-        TextView tv5;
-        TextView tv6;
-        TextView tv7;
-        TextView tv8;
-        TextView tv9;
-        TextView tv10;
-
+        #region Attributs
+        private TextView tv1;
+        private TextView tv2;
+        private TextView tv3;
+        private TextView tv4;
+        private TextView tv5;
+        private TextView tv6;
+        private TextView tv7;
+        private TextView tv8;
+        private TextView tv9;
+        private TextView tv10;
+        private Button btnValidate;
+        #endregion
+        
+        #region OverridedMethods
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             this.SupportActionBar.Title = "Placette 1 - Rayon 22.5";
-            SetupTabs();
+            this.SupportActionBar.NavigationMode = (int)ActionBarNavigationMode.Tabs;
+            this.SupportActionBar.SetDisplayShowHomeEnabled(true);
+            this.SupportActionBar.SetDisplayShowTitleEnabled(true);
+            this.SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+            this.SupportActionBar.SetHomeButtonEnabled(true);
+            this.SetupTabs();
         }
 
+        public override int GetContentView()
+        {
+            return Resource.Layout.activity_tabs;
+        }
+
+        protected override void InitComponents()
+        {
+            this.tv1 = this.FindViewById<TextView>(Resource.Id.tv_1);
+            this.tv2 = this.FindViewById<TextView>(Resource.Id.tv_2);
+            this.tv3 = this.FindViewById<TextView>(Resource.Id.tv_3);
+            this.tv4 = this.FindViewById<TextView>(Resource.Id.tv_4);
+            this.tv5 = this.FindViewById<TextView>(Resource.Id.tv_5);
+            this.tv6 = this.FindViewById<TextView>(Resource.Id.tv_6);
+            this.tv7 = this.FindViewById<TextView>(Resource.Id.tv_7);
+            this.tv8 = this.FindViewById<TextView>(Resource.Id.tv_8);
+            this.tv9 = this.FindViewById<TextView>(Resource.Id.tv_9);
+            this.tv10 = this.FindViewById<TextView>(Resource.Id.tv_10);
+            this.btnValidate = this.FindViewById<Button>(Resource.Id.btn_validate);
+        }
+
+        protected override void InitEvents()
+        {
+            this.btnValidate.Click += (sender, e) =>
+            {
+                this.Finish();
+            };
+        }
+
+        public override void OnBackPressed()
+        {
+            base.OnBackPressed();
+        }
+        #endregion
+
+        #region Methods
+        #region Private
         private void SetupTabs()
         {
             this.SupportActionBar.AddTab(
@@ -62,37 +97,9 @@ namespace App3
                 .SetTabListener(this),
                 3);
         }
+        #endregion
 
-        public override int GetContentView()
-        {
-            return Resource.Layout.activity_tabs;
-        }
-
-        public override void InitComponents()
-        {
-            this.tv1 = this.FindViewById<TextView>(Resource.Id.tv_1);
-            this.tv2 = this.FindViewById<TextView>(Resource.Id.tv_2);
-            this.tv3 = this.FindViewById<TextView>(Resource.Id.tv_3);
-            this.tv4 = this.FindViewById<TextView>(Resource.Id.tv_4);
-            this.tv5 = this.FindViewById<TextView>(Resource.Id.tv_5);
-            this.tv6 = this.FindViewById<TextView>(Resource.Id.tv_6);
-            this.tv7 = this.FindViewById<TextView>(Resource.Id.tv_7);
-            this.tv8 = this.FindViewById<TextView>(Resource.Id.tv_8);
-            this.tv9 = this.FindViewById<TextView>(Resource.Id.tv_9);
-            this.tv10 = this.FindViewById<TextView>(Resource.Id.tv_10);
-
-            this.SupportActionBar.NavigationMode = (int)ActionBarNavigationMode.Tabs;
-            this.SupportActionBar.SetDisplayShowHomeEnabled(true);
-            this.SupportActionBar.SetDisplayShowTitleEnabled(true);
-            this.SupportActionBar.SetDisplayHomeAsUpEnabled(true);
-            this.SupportActionBar.SetHomeButtonEnabled(true);
-        }
-
-        public override void InitEvents()
-        {
-
-        }
-
+        #region Public
         public void OnTabReselected(Tab tab, Android.Support.V4.App.FragmentTransaction ft)
         {
 
@@ -103,6 +110,7 @@ namespace App3
             switch (tab.Position)
             {
                 case 0:
+                    #region SetValueCase0
                     this.tv1.Text = "Placeau 1";
                     this.tv2.Text = "Placeau 1";
                     this.tv3.Text = "Placeau 1";
@@ -113,8 +121,10 @@ namespace App3
                     this.tv8.Text = "Placeau 1";
                     this.tv9.Text = "Placeau 1";
                     this.tv10.Text = "Placeau 1";
+                    #endregion
                     break;
                 case 1:
+                    #region SetValuesCase1
                     this.tv1.Text = "Placeau 2";
                     this.tv2.Text = "Placeau 2";
                     this.tv3.Text = "Placeau 2";
@@ -125,8 +135,10 @@ namespace App3
                     this.tv8.Text = "Placeau 2";
                     this.tv9.Text = "Placeau 2";
                     this.tv10.Text = "Placeau 2";
+                    #endregion
                     break;
                 case 2:
+                    #region SetValueCase2
                     this.tv1.Text = "Placeau 3";
                     this.tv2.Text = "Placeau 3";
                     this.tv3.Text = "Placeau 3";
@@ -137,8 +149,10 @@ namespace App3
                     this.tv8.Text = "Placeau 3";
                     this.tv9.Text = "Placeau 3";
                     this.tv10.Text = "Placeau 3";
+                    #endregion
                     break;
                 case 3:
+                    #region SetValueCase3
                     this.tv1.Text = "Sous-étage";
                     this.tv2.Text = "Sous-étage";
                     this.tv3.Text = "Sous-étage";
@@ -149,6 +163,7 @@ namespace App3
                     this.tv8.Text = "Sous-étage";
                     this.tv9.Text = "Sous-étage";
                     this.tv10.Text = "Sous-étage";
+                    #endregion
                     break;
             }
         }
@@ -157,10 +172,7 @@ namespace App3
         {
 
         }
-
-        public override void OnBackPressed()
-        {
-            base.OnBackPressed();
-        }
+        #endregion
+        #endregion
     }
 }
