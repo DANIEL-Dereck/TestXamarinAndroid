@@ -14,4 +14,7 @@
     <color name="TabSelected">#2C5413</color>
     <color name="TabUnselected">#183704</color>
 
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
 </resources>

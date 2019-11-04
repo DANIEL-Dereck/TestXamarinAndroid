@@ -49,6 +49,9 @@ namespace App3
                         libel = $"Diam2 of {this.editedItem.Num}";
                         this.etValue.Text = this.editedItem.Diam2.ToString();
                         break;
+                    default:
+                        libel = $"{this.editedItem.Num}";
+                        break;
                 }
                 this.tvLibel.Text = libel;
             }
@@ -89,6 +92,12 @@ namespace App3
                         if (int.TryParse(this.etValue.Text, out val))
                         {
                             this.editedItem.Diam2 = val;
+                        }
+                        break;
+                    default:
+                        if (int.TryParse(this.etValue.Text, out val))
+                        {
+                            this.editedItem.Num = val;
                         }
                         break;
                 }

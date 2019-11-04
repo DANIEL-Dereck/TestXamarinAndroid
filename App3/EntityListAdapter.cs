@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
@@ -21,11 +23,16 @@ namespace App3.Resources
         #region Attributs
         private List<Entity> items;
         private Context context;
+        private ViewHolder viewHolder;
         private string[] alertItems = new string[] { "Editer", "Supprimer" };
-        #endregion
+        private int[] pictAlertItems = new int[]{ Resource.Drawable.outline_edit_24, Resource.Drawable.outline_clear_24 };
+    #endregion
 
-        #region Properties
-        public Entity SelectedEntity { get; set; }
+    #region Properties
+    public Entity SelectedEntity { get; set; }
+        public EventHandler NumClickEvent { get; set; }
+
+        public Dictionary<string, Entity> SelectedCell { get; set; }
         #endregion
 
         #region Constructors
@@ -51,9 +58,9 @@ namespace App3.Resources
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
             View itemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.entity_item, parent, false);
-            ViewHolder vh = new EntityListAdapterViewHolder(itemView);
+            this.viewHolder = new EntityListAdapterViewHolder(itemView);
 
-            return vh;
+            return this.viewHolder;
         }
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder viewHolder, int position)
@@ -62,8 +69,8 @@ namespace App3.Resources
             holder.IsRecyclable = false;
             var selectedItem = items[viewHolder.AdapterPosition];
 
-            int titelSize = 20;
-            int itemSize = 18;
+            int titelSize = 24;
+            int itemSize = 22;
 
             Color txtColor = new Color(0, 0, 0);
             Color color = new Color(255, 255, 255);
@@ -112,6 +119,14 @@ namespace App3.Resources
                 holder.TVEss.SetTextSize(ComplexUnitType.Sp, itemSize);
                 holder.TVDiam1.SetTextSize(ComplexUnitType.Sp, itemSize);
                 holder.TVDiam2.SetTextSize(ComplexUnitType.Sp, itemSize);
+
+                #region TVNumEventEx
+                holder.TVNum.Click += (sender, e) =>
+                {
+                    this.SelectedEntity = selectedItem;
+                };
+                holder.TVNum.Click += this.NumClickEvent;
+                #endregion
 
                 #region TVEssEvent
                 // Set click event.
@@ -163,8 +178,25 @@ namespace App3.Resources
                     AlertDialog.Builder alert = new AlertDialog.Builder(this.context);
                     alert.SetTitle("Que voulez-vous faire ?");
 
-                    string[] alertItems = new string[] { "Editer", "Supprimer" };
-                    alert.SetItems(alertItems, (id, listener) =>
+                    AlertItem[] alertItems = new AlertItem[] 
+                    {
+                        new AlertItem() {
+                            Icon =  Resource.Drawable.outline_edit_24,
+                            Text = "Editer"
+                        },
+                        new AlertItem()
+                        {
+                            Icon = Resource.Drawable.outline_clear_24,
+                            Text = "Supprimer"
+                        }
+                    };
+
+                    ListView listView = ((Activity)context).FindViewById<ListView>(Resource.Id.lv_alert);
+                    AlertAdapter arrayAdapter = new AlertAdapter(context, alertItems);
+                    listView.SetAdapter(arrayAdapter);
+
+                    alert.SetView(listView);
+                    alert.SetItems(this.alertItems, (id, listener) =>
                     {
                         switch (listener.Which)
                         {
@@ -184,7 +216,7 @@ namespace App3.Resources
                             default:
                                 break;
                         }
-                    });
+                    }).SetIcon(Resource.Drawable.outline_edit_24);
                     alert.SetNegativeButton("Cancel", (senderAlert, args) => { });
                     alert.Create().Show();
                 };

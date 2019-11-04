@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/tv_delete"
         android:layout_height="wrap_content"
-        android:layout_width="0dp"
+        android:layout_width="25dp"
         style="@style/lstItem"
         android:text="X"
         android:textColor="@android:color/holo_red_light"

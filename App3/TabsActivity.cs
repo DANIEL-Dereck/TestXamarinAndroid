@@ -1,7 +1,12 @@
-﻿using Android.App;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Reflection;
+using Android.App;
 using Android.OS;
 using Android.Widget;
 using static Android.Support.V7.App.ActionBar;
+using static Java.Util.ResourceBundle;
 
 namespace App3
 {
@@ -24,18 +29,15 @@ namespace App3
         private EditText et6;
 
         private Button btnValidate;
+
+        bool btn5State;
         #endregion
-        
+
         #region OverridedMethods
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            this.SupportActionBar.NavigationMode = (int)ActionBarNavigationMode.Tabs;
-            this.SupportActionBar.SetDisplayShowHomeEnabled(true);
-            this.SupportActionBar.SetDisplayShowTitleEnabled(true);
-            this.SupportActionBar.SetDisplayHomeAsUpEnabled(true);
-            this.SupportActionBar.SetHomeButtonEnabled(true);
-            this.SetupTabs();
+            this.InitSupportActionBar();
         }
 
         public override int GetContentView()
@@ -68,6 +70,11 @@ namespace App3
             {
                 this.Finish();
             };
+
+            this.btn5.Click += (sender, e) => {
+                this.btn5State = !this.btn5State;
+                this.btn5.Text = (this.btn5State ? "OUI" : "NON");
+            };
         }
 
         public override void OnBackPressed()
@@ -78,32 +85,41 @@ namespace App3
 
         #region Methods
         #region Private
-        private void SetupTabs()
+        #region ActionBar
+        private void InitSupportActionBar()
         {
-            this.SupportActionBar.AddTab(
-                this.SupportActionBar.NewTab()
-                .SetText("Placeau\n1")
-                .SetTabListener(this),
-                0);
+            this.SupportActionBar.NavigationMode = (int)ActionBarNavigationMode.Tabs;
+            this.SupportActionBar.SetDisplayShowHomeEnabled(true);
+            this.SupportActionBar.SetDisplayShowTitleEnabled(true);
+            this.SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+            this.SupportActionBar.SetHomeButtonEnabled(true);
 
             this.SupportActionBar.AddTab(
                 this.SupportActionBar.NewTab()
-                .SetText("Placeau\n2")
+                .SetText("Placeau 1")
+                .SetTabListener(this),
+                0, true);
+
+            this.SupportActionBar.AddTab(
+                this.SupportActionBar.NewTab()
+                .SetText("Placeau 2")
                 .SetTabListener(this),
                 1);
 
             this.SupportActionBar.AddTab(
                 this.SupportActionBar.NewTab()
-                .SetText("Placeau\n3")
+                .SetText("Placeau 3")
                 .SetTabListener(this),
                 2);
 
             this.SupportActionBar.AddTab(
                 this.SupportActionBar.NewTab()
-                .SetText("Sous-\nétage")
+                .SetText("Sous-étage")
                 .SetTabListener(this),
                 3);
         }
+        #endregion
+
         #endregion
 
         #region Public
@@ -113,55 +129,36 @@ namespace App3
         }
 
         public void OnTabSelected(Tab tab, Android.Support.V4.App.FragmentTransaction ft)
-        {   
+        {
+            this.et1.Text = "3";
+            this.et2.Text = "3";
+            this.et3.Text = "8";
+            this.et4.Text = "3";
+            this.et6.Text = "3";
+            this.btn5State = true;
+
+            this.btn5.Text = (this.btn5State ? "OUI" : "NON");
+
             switch (tab.Position)
             {
                 case 0:
-                    this.SupportActionBar.Title = "Placette 1 - Rayon 22.5";
-
+                    this.SupportActionBar.Title = "Plac.1 - Placeau 1 - Rayon 22.5";
                     #region SetValueCase0
-                    this.tv1.Text = "Placeau 1";
-                    this.tv2.Text = "Placeau 1";
-                    this.tv3.Text = "Placeau 1";
-                    this.tv4.Text = "Placeau 1";
-                    this.tv5.Text = "Placeau 1";
-                    this.tv6.Text = "Placeau 1";
                     #endregion
                     break;
                 case 1:
-                    this.SupportActionBar.Title = "Placette 1 - Rayon 23.5";
-
-                    #region SetValuesCase1
-                    this.tv1.Text = "Placeau 2";
-                    this.tv2.Text = "Placeau 2";
-                    this.tv3.Text = "Placeau 2";
-                    this.tv4.Text = "Placeau 2";
-                    this.tv5.Text = "Placeau 2";
-                    this.tv6.Text = "Placeau 2";
+                    this.SupportActionBar.Title = "Plac.2 - Placeau 2 - Rayon 23.5";
+                    #region SeetaluesCase1
                     #endregion
                     break;
                 case 2:
-                    this.SupportActionBar.Title = "Placette 1 - Rayon 24.5";
-
-                    #region SetValueCase2
-                    this.tv1.Text = "Placeau 3";
-                    this.tv2.Text = "Placeau 3";
-                    this.tv3.Text = "Placeau 3";
-                    this.tv4.Text = "Placeau 3";
-                    this.tv5.Text = "Placeau 3";
-                    this.tv6.Text = "Placeau 3";
+                    this.SupportActionBar.Title = "Plac.3 - Placeau 3 - Rayon 24.5";
+                    #region SeetalueCase2
                     #endregion
                     break;
                 case 3:
-                    this.SupportActionBar.Title = "Placette 1 - Rayon 25.5";
-
-                    #region SetValueCase3
-                    this.tv1.Text = "Sous-étage";
-                    this.tv2.Text = "Sous-étage";
-                    this.tv3.Text = "Sous-étage";
-                    this.tv4.Text = "Sous-étage";
-                    this.tv5.Text = "Sous-étage";
-                    this.tv6.Text = "Sous-étage";
+                    this.SupportActionBar.Title = "Sous-étage - Rayon 25.5";
+                    #region SeetalueCase3
                     #endregion
                     break;
             }

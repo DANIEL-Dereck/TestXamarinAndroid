@@ -43,7 +43,14 @@
 
     <style name="lstItem">
         <item name="android:textAlignment">center</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+    </style>
+
+    <style name="text">
+        <item name="android:textSize">22sp</item>
         <item name="android:maxLines">1</item>
         <item name="android:layout_marginTop">2dp</item>
         <item name="android:layout_marginBottom">2dp</item>
@@ -54,6 +61,15 @@
         <item name="android:background">@color/Background</item>
         <item name="android:textColorPrimary">@color/Text</item>
         <item name="textColorAlertDialogListItem">@color/AlertDialogListItem</item>
+    </style>
+
+    <style name="BtnInputStyle">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:layout_marginRight">2dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:background">@drawable/btn_border</item>
     </style>
     
 </resources>
