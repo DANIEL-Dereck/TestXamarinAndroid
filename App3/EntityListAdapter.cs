@@ -23,7 +23,7 @@ namespace App3.Resources
         private List<Entity> items;
         private Context context;
         private ViewHolder viewHolder;
-        private string[] alertItems = new string[] { "Editer", "Supprimer" };
+        private string[] alertItems = new string[] { "Editer", "Effacer" };
 
         private AlertItem[] alertsIconItems = new AlertItem[]
             {
@@ -34,7 +34,7 @@ namespace App3.Resources
                 new AlertItem()
                 {
                     Icon = Resource.Drawable.baseline_clear_black_36,
-                    Text = "Supprimer"
+                    Text = "Effacer"
                 }
             };
         #endregion
@@ -156,7 +156,6 @@ namespace App3.Resources
                     AlertDialog.Builder alert = new AlertDialog.Builder(this.context);
                     alert.SetTitle("Que voulez-vous faire ?");
 
-                    string[] alertItems = new string[] { "Editer", "Supprimer" };
                     alert.SetItems(alertItems, (id, listener) =>
                     {
                         switch (listener.Which)
