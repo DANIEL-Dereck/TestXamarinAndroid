@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Reflection;
-using Android.App;
+﻿using Android.App;
 using Android.OS;
 using Android.Widget;
 using static Android.Support.V7.App.ActionBar;
-using static Java.Util.ResourceBundle;
 
 namespace App3
 {

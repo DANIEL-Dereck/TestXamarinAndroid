@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
@@ -17,6 +10,7 @@ namespace App3
         private Context context;
         private AlertItem[] items;
 
+        public EventHandler ClickEvent { get; set; }
 
         public AlertAdapter(Context context, AlertItem[] items) : base(context, 0, items)
         {

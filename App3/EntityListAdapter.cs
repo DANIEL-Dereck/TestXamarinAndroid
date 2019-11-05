@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
@@ -25,11 +24,23 @@ namespace App3.Resources
         private Context context;
         private ViewHolder viewHolder;
         private string[] alertItems = new string[] { "Editer", "Supprimer" };
-        private int[] pictAlertItems = new int[]{ Resource.Drawable.outline_edit_24, Resource.Drawable.outline_clear_24 };
-    #endregion
 
-    #region Properties
-    public Entity SelectedEntity { get; set; }
+        private AlertItem[] alertsIconItems = new AlertItem[]
+            {
+                new AlertItem() {
+                    Icon =  Resource.Drawable.baseline_edit_black_36,
+                    Text = "Editer"
+                },
+                new AlertItem()
+                {
+                    Icon = Resource.Drawable.baseline_clear_black_36,
+                    Text = "Supprimer"
+                }
+            };
+        #endregion
+
+        #region Properties
+        public Entity SelectedEntity { get; set; }
         public EventHandler NumClickEvent { get; set; }
 
         public Dictionary<string, Entity> SelectedCell { get; set; }
@@ -178,25 +189,10 @@ namespace App3.Resources
                     AlertDialog.Builder alert = new AlertDialog.Builder(this.context);
                     alert.SetTitle("Que voulez-vous faire ?");
 
-                    AlertItem[] alertItems = new AlertItem[] 
-                    {
-                        new AlertItem() {
-                            Icon =  Resource.Drawable.outline_edit_24,
-                            Text = "Editer"
-                        },
-                        new AlertItem()
-                        {
-                            Icon = Resource.Drawable.outline_clear_24,
-                            Text = "Supprimer"
-                        }
-                    };
-
-                    ListView listView = ((Activity)context).FindViewById<ListView>(Resource.Id.lv_alert);
-                    AlertAdapter arrayAdapter = new AlertAdapter(context, alertItems);
-                    listView.SetAdapter(arrayAdapter);
-
-                    alert.SetView(listView);
-                    alert.SetItems(this.alertItems, (id, listener) =>
+                    View view = View.Inflate(context, Resource.Layout.alertView, null);
+                    AlertAdapter arrayAdapter = new AlertAdapter(context, alertsIconItems);
+                    alert.SetView(view);
+                    alert.SetAdapter(arrayAdapter, (id, listener) =>
                     {
                         switch (listener.Which)
                         {
@@ -216,7 +212,7 @@ namespace App3.Resources
                             default:
                                 break;
                         }
-                    }).SetIcon(Resource.Drawable.outline_edit_24);
+                    });
                     alert.SetNegativeButton("Cancel", (senderAlert, args) => { });
                     alert.Create().Show();
                 };
