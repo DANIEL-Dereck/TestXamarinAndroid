@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Support.Constraints;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
@@ -15,7 +16,9 @@ namespace App3
         #region Attributs
         private ImageButton btnEdit;
         private ImageButton btnRemove;
+        private LinearLayout llFloatingMenu;
 
+        private Button btnScan;
         private Button btnCancel;
         private Button btnValidate;
         private RecyclerView rvItems;
@@ -52,12 +55,16 @@ namespace App3
 
         protected override void InitComponents()
         {
+            this.btnScan = this.FindViewById<Button>(Resource.Id.btn_scan);
             this.btnEdit = this.FindViewById<ImageButton>(Resource.Id.btn_edit);
             this.btnRemove = this.FindViewById<ImageButton>(Resource.Id.btn_remove);
             this.btnCancel = this.FindViewById<Button>(Resource.Id.btn_cancel);
             this.btnValidate = this.FindViewById<Button>(Resource.Id.btn_validate);
             this.rvItems = this.FindViewById<RecyclerView>(Resource.Id.rv_items);
+            this.llFloatingMenu = this.FindViewById<LinearLayout>(Resource.Id.ll_floating_menu);
+
             this.listAdapter = new EntityListAdapter(SingletonEntity.Instance.FindAll(), this);
+            this.listAdapter.LlFloatingMenu = this.llFloatingMenu;
         }
 
         protected override void InitEvents()
@@ -73,10 +80,17 @@ namespace App3
                 this.StartActivity(intent);
             };
 
+            this.btnScan.Click += (sender, e) =>
+            {
+                Intent intent = new Intent(this, typeof(ZxingActivity));
+                this.StartActivity(intent);
+            };
+
             this.btnEdit.Click += (sender, e) =>
             {
                 this.btnEdit.Visibility = Android.Views.ViewStates.Gone;
                 this.btnRemove.Visibility = Android.Views.ViewStates.Gone;
+                this.llFloatingMenu.Visibility = Android.Views.ViewStates.Gone;
 
                 if (this.listAdapter.SelectedEntity != null)
                 {
@@ -99,11 +113,13 @@ namespace App3
 
                 this.btnEdit.Visibility = Android.Views.ViewStates.Gone;
                 this.btnRemove.Visibility = Android.Views.ViewStates.Gone;
+                this.llFloatingMenu.Visibility = Android.Views.ViewStates.Gone;
             };
 
             this.listAdapter.NumClickEvent = (sender, e) => {
                 this.btnEdit.Visibility = Android.Views.ViewStates.Visible;
                 this.btnRemove.Visibility = Android.Views.ViewStates.Visible;
+                this.llFloatingMenu.Visibility = Android.Views.ViewStates.Visible;
             };
         }
 
@@ -112,10 +128,12 @@ namespace App3
             bool result = base.DispatchTouchEvent(ev);
 
             if (this.btnEdit.Visibility == Android.Views.ViewStates.Visible
-                && this.btnRemove.Visibility == Android.Views.ViewStates.Visible)
+                && this.btnRemove.Visibility == Android.Views.ViewStates.Visible
+                && this.llFloatingMenu.Visibility == Android.Views.ViewStates.Visible)
             {
                 this.btnEdit.Visibility = Android.Views.ViewStates.Gone;
                 this.btnRemove.Visibility = Android.Views.ViewStates.Gone;
+                this.llFloatingMenu.Visibility = Android.Views.ViewStates.Gone;
             }
 
             return result;

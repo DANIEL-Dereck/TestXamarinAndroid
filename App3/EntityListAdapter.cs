@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
+using Android.Support.Constraints;
 using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
@@ -42,6 +43,7 @@ namespace App3.Resources
         #region Properties
         public Entity SelectedEntity { get; set; }
         public EventHandler NumClickEvent { get; set; }
+        public LinearLayout LlFloatingMenu { get; set; }
 
         public Dictionary<string, Entity> SelectedCell { get; set; }
         #endregion
@@ -135,6 +137,25 @@ namespace App3.Resources
                 holder.TVNum.Click += (sender, e) =>
                 {
                     this.SelectedEntity = selectedItem;
+
+                    #region RedefineCosntraint
+                    bool putOnRight = true;
+
+                    //https://stackoverflow.com/questions/45263159/constraintlayout-change-constraints-programmatically
+                    ConstraintLayout.LayoutParams para = LlFloatingMenu.LayoutParameters as ConstraintLayout.LayoutParams;
+
+                    if (putOnRight)
+                    {
+                        para.RightToLeft = Resource.Id.tv_num;
+                    }
+                    else
+                    {
+                        para.LeftToRight = Resource.Id.tv_num;
+                    }
+
+                    LlFloatingMenu.RequestLayout();
+
+                    #endregion
                 };
                 holder.TVNum.Click += this.NumClickEvent;
                 #endregion
@@ -256,6 +277,7 @@ namespace App3.Resources
         public TextView TVEss { get; set; }
         public TextView TVDiam1 { get; set; }
         public TextView TVDiam2 { get; set; }
+        public ConstraintLayout ClMainLayout { get; set; }
         #endregion
 
         public EntityListAdapterViewHolder(View itemView) : base(itemView)
@@ -266,6 +288,7 @@ namespace App3.Resources
             this.TVEss = itemView.FindViewById<TextView>(Resource.Id.tv_ess);
             this.TVDiam1 = itemView.FindViewById<TextView>(Resource.Id.tv_dim1);
             this.TVDiam2 = itemView.FindViewById<TextView>(Resource.Id.tv_dim2);
+            this.ClMainLayout = itemView.FindViewById<ConstraintLayout>(Resource.Id.cl_main_layout);
             #endregion
         }
     }
